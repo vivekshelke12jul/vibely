@@ -26,6 +26,9 @@ public class AuthService {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    JwtService jwtService;
+
     public AuthResponse register(RegisterRequest request) {
 
         AppUser user = new AppUser(
@@ -34,9 +37,9 @@ public class AuthService {
                 Role.USER
         );
 
-        userRepository.save(user);
-
-        return new AuthResponse("registration successful");
+        AppUser savedUser = userRepository.save(user);
+        String token = jwtService.generateToken(savedUser.getUsername());
+        return new AuthResponse("registration successful", token);
 
     }
 
@@ -47,7 +50,8 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-        return new AuthResponse("login successful");
+        String token = jwtService.generateToken(request.getUsername());
+        return new AuthResponse("login successful", token);
     }
 
 }
