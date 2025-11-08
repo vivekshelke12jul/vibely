@@ -1,15 +1,32 @@
 package com.vivek.vibelyBackend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.vivek.vibelyBackend.exchanges.request.LoginRequest;
+import com.vivek.vibelyBackend.exchanges.request.RegisterRequest;
+import com.vivek.vibelyBackend.exchanges.response.AuthResponse;
+import com.vivek.vibelyBackend.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/public")
 public class publicController {
 
-    @GetMapping("/home")
+    @Autowired
+    AuthService authService;
+
+    @GetMapping
     public String home(){
-        return "home sweet home";
+        return "public info";
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }
