@@ -18,9 +18,16 @@ public class AppUser {
     private String password;
     private Role role;
 
+    private Integer wins;
+    private Integer losses;
+    private Integer draws;
+
     public AppUser(String username, String password, Role role){
         this.username = username;
         this.password = password;
         this.role = role;
+        this.wins = 0;
+        this.losses = 0;
+        this.draws = 0;
     }
 }

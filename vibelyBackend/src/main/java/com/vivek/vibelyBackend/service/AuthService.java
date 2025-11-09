@@ -7,11 +7,13 @@ import com.vivek.vibelyBackend.model.AppUser;
 import com.vivek.vibelyBackend.model.enums.Role;
 import com.vivek.vibelyBackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
@@ -30,7 +32,9 @@ public class AuthService {
     JwtService jwtService;
 
     public AuthResponse register(RegisterRequest request) {
-
+        if(userRepository.existsByUsername(request.getUsername())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST ,"User already exists");
+        }
         AppUser user = new AppUser(
                 request.getUsername(),
                 passwordEncoder.encode(request.getPassword()),

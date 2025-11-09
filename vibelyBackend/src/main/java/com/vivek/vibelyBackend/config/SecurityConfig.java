@@ -43,6 +43,8 @@ public class SecurityConfig {
                 .build();
     }
 
+    // TODO: set cors
+
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
