@@ -113,11 +113,11 @@ public class GameService {
         return mapToResponse(game);
     }
 
-    public List<GameResponse> getAppUserGames(String username) {
+    public List<GameResponse> getUserGames(String username) {
         AppUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("AppUser not found"));
 
-        return gameRepository.findByPlayerXOrPlayerOOrderByCreatedAtDesc(user, user)
+        return gameRepository.findLatestGames(user)
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());

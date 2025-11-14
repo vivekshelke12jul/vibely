@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<AppUser, Integer> {
 
     Optional<AppUser> findByUsername(String username);
 
-    @Query("SELECT top 10u FROM User u ORDER BY u.wins DESC, u.losses ASC")
-    List<AppUser> findAllOrderedByScore();
+    List<AppUser> findFirst10ByOrderByWinsDescLossesAsc();
+
 
 }

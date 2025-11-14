@@ -6,19 +6,17 @@ import com.vivek.vibelyBackend.exchanges.response.AuthResponse;
 import com.vivek.vibelyBackend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/public")
-public class publicController {
+@RequestMapping("/api/auth")
+public class AuthController {
 
     @Autowired
-    AuthService authService;
-
-    @GetMapping
-    public String home(){
-        return "public info";
-    }
+    private AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
